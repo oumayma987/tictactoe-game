@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { WinnercheckService } from '../../winnercheck.service'
+import { WinnercheckService } from '../../winnercheck.service';
 import { resolve } from 'url';
 import { reject } from 'q';
 
@@ -10,7 +10,7 @@ import { reject } from 'q';
 })
 export class BoardComponent {
 
-  constructor(private winnercheckService: WinnercheckService){}
+  constructor(private winnercheckService: WinnercheckService) {}
 
   board = this.winnercheckService.board;
   xTurn = this.winnercheckService.xTurn;
@@ -18,30 +18,32 @@ export class BoardComponent {
   haveWinner = false;
 
 addSymbol(id: number) {
-  if (this.board[id]) return;
-  this.board[id] = (this.xTurn ? "X" : "O") ;
+  if (this.board[id]) {
+    return;
+  }
+  this.board[id] = (this.xTurn ? 'X' : 'O' ) ;
   this.xTurn = !this.xTurn;
-  this.winCheck()
+  this.winCheck();
 }
 
-handleSquareClick(index:number){
-  if(this.haveWinner == false) this.addSymbol(index);
-  (this.winner.find(item => item == true) ? this.haveWinner = true
+handleSquareClick(index: number) {
+  if (this.haveWinner === false) { this.addSymbol(index); }
+  (this.winner.find(item => item === true) ? this.haveWinner = true
     : this.haveWinner = false);
-  let indexes = this.winnercheckService.checkWinner(this.board)
-  indexes.map(item => this.winner[item] = true)
+  const indexes = this.winnercheckService.checkWinner(this.board);
+  indexes.map(item => this.winner[item] = true);
 }
 
-winCheck(){
-  if (this.board.filter(item => typeof item == "string").length == 9){
-    (this.winner.find(item => item == true) ? this.haveWinner = true
+winCheck() {
+  if (this.board.filter(item => typeof item === 'string').length === 9) {
+    (this.winner.find(item => item === true) ? this.haveWinner = true
     : this.haveWinner = false);
-  let indexes = this.winnercheckService.checkWinner(this.board)
-  indexes.map(item => this.winner[item] = true)
+  const indexes = this.winnercheckService.checkWinner(this.board);
+   indexes.map(item => this.winner[item] = true);
   }
 }
 
-handleReset(){
+handleReset() {
   this.board = Array(9).fill(null);
   this.winner = Array(9).fill(false);
 }
